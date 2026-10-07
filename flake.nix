@@ -19,6 +19,15 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
     in
     {
+      # The library as other projects take it. `nix build` checks that it
+      # still builds that way.
+      packages = forAllSystems (pkgs: {
+        default = pkgs.callPackage ./nix/package.nix {
+          stdenv = pkgs.llvmPackages_21.stdenv;
+          inherit (import ./nix/deps.nix pkgs) bedrock;
+        };
+      });
+
       devShells = forAllSystems (pkgs:
         let
           # The compiler Bazel builds with. Bazel picks up $CC from this shell,

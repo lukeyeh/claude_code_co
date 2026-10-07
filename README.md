@@ -45,6 +45,22 @@ Each directory is a Bazel package, and each depends only on those below it.
 Depend on `//:claude_code` for all three. Each file's `_test.cc` shows how it
 is used.
 
+## Using it from another project
+
+As bedrock is used: a Nix package that Bazel sees as an external repository.
+In a project laid out like this one, add this repository as a non-flake
+input beside bedrock, build it in `nix/deps.nix` with
+
+```nix
+claude_code_co = pkgs.callPackage "${claude-code-co-source}/nix/package.nix" {
+  inherit stdenv bedrock;
+};
+```
+
+and present it in `MODULE.bazel` with a `nix_pkg.file` block named
+`claude_code_co`, as bedrock's is. Then depend on
+`"@claude_code_co//:claude_code"`.
+
 ## Setup
 
 Needs [Nix](https://nixos.org) with flakes. Building and testing need nothing
