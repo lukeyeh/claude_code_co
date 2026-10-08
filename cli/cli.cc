@@ -40,6 +40,9 @@ std::vector<std::string> CommandLine(const Options& options) {
       // "stdio" has the program ask over the conversation itself.
       arguments.emplace_back("--permission-prompt-tool=stdio");
       break;
+    case Permissions::kAuto:
+      arguments.emplace_back("--permission-mode=auto");
+      break;
     case Permissions::kAcceptEdits:
       arguments.emplace_back("--permission-mode=acceptEdits");
       break;

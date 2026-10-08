@@ -32,6 +32,10 @@ enum class Permissions : uint8_t {
   // As kDefault, but what would be refused is asked about instead: it comes
   // from Session::Next as a PermissionRequest.
   kAsk,
+  // Claude Code decides for itself, tool by tool, whether what Claude wants
+  // is safe enough to go ahead unasked, and refuses what is not. How it
+  // decides is the user's to configure, in their Claude Code settings.
+  kAuto,
   // Editing files as well.
   kAcceptEdits,
   // Looking, but changing nothing: Claude makes a plan instead.

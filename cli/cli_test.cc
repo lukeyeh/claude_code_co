@@ -145,6 +145,11 @@ TEST(StartTest, TurnsOptionsIntoFlags) {
 TEST(StartTest, NamesThePermissionMode) {
   RunOnEventLoop([]() -> Task<> {
     EXPECT_EQ((co_await StartFake({
+                   .permissions = claude_code::Permissions::kAuto,
+               }))
+                  .arguments.back(),
+              "--permission-mode=auto");
+    EXPECT_EQ((co_await StartFake({
                    .permissions = claude_code::Permissions::kAcceptEdits,
                }))
                   .arguments.back(),
